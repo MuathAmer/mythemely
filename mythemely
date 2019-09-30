@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#Change the following lines to the desired themes
+
+light_gtk_theme="Adwaita"
+dark_gtk_theme="Adwaita-dark"
+
+#Empty means shell theme will not change, or write 'default' for default shell
+light_shell_theme=""
+dark_shell_theme=""
+
+
+  #Check current gtk theme: `$ gsettings get org.gnome.desktop.interface gtk-theme`
+  #Check current shell theme: `$ gsettings get org.gnome.shell.extensions.user-theme name`
+  
+
+if [ $# -eq 0 ]
+	then
+	echo "Options: -l for light, -d for dark"
+	exit 0
+fi
+
+
+
+if [ "$1" == "-l" ]
+then
+	file=$(ls $HOME/Pictures/Lights | sort -R  | head -n 1)
+
+	gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Lights/$file
+
+	gsettings set org.gnome.desktop.interface gtk-theme $light_gtk_theme
+
+	gsettings set org.gnome.shell.extensions.user-theme name $light_shell_theme
+
+  exit
+fi
+
+
+
+if [ "$1" == "-d" ]
+then
+	file=$(ls $HOME/Pictures/Darks | sort -R  | head -n 1)
+
+	gsettings set org.gnome.desktop.background picture-uri file://$HOME/Pictures/Darks/$file
+  
+	gsettings set org.gnome.desktop.interface gtk-theme $dark_gtk_theme
+  
+	gsettings set org.gnome.shell.extensions.user-theme name $dark_shell_theme
+  exit
+fi		
